@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<cache
+    xmlns="http://schema.pivotal.io/gemfire/cache"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://schema.pivotal.io/gemfire/cache http://schema.pivotal.io/gemfire/cache/cache-8.1.xsd"
+    version="8.1">
+
+ <pdx read-serialized="true" persistent="true">
+     <pdx-serializer>
+         <class-name>com.gemstone.gemfire.pdx.ReflectionBasedAutoSerializer</class-name>
+         <parameter name="classes">
+             <string>.*,io.pivotal.domain.*</string>
+         </parameter>
+     </pdx-serializer>
+  </pdx>
+
+  <region name="Product">
+     <region-attributes refid="PARTITION">
+     	<key-constraint>java.lang.String</key-constraint>
+     	<partition-attributes redundant-copies="1"/>
+     </region-attributes>
+  </region>
+
+    <region name="Transaction">
+     <region-attributes refid="PARTITION">
+     	<key-constraint>java.lang.String</key-constraint>
+     	<partition-attributes redundant-copies="1" colocated-with="Product">
+  		 	<partition-resolver name="TransactionPartitionResolver">
+  		 		<class-name>io.pivotal.benchmarks.partitionresolver.TransactionPartitionResolver</class-name>
+  		 	</partition-resolver>
+  		</partition-attributes>
+     </region-attributes>
+  </region>
+
+  <function-service>
+		<function>
+			<class-name>io.pivotal.benchmarks.functions.SizeFunction</class-name>
+		</function>
+		<function>
+			<class-name>io.pivotal.benchmarks.functions.GetTransactionCountForProductTypeFunction</class-name>
+		</function>
+  </function-service>
+
+</cache>

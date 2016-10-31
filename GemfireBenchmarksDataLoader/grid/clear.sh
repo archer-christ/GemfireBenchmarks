@@ -1,0 +1,5 @@
+#!/bin/bash
+
+rm -rf LOCATOR_$HOSTNAME
+rm -rf CACHE_SERVER_$HOSTNAME
+rm -rf CACHE_SERVER_2_$HOSTNAME

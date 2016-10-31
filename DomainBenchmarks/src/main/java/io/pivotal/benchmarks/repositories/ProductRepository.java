@@ -1,0 +1,33 @@
+/**
+ *
+ */
+package io.pivotal.benchmarks.repositories;
+
+import io.pivotal.benchmarks.domain.Product;
+
+import java.util.Collection;
+
+import org.springframework.data.gemfire.repository.GemfireRepository;
+import org.springframework.data.gemfire.repository.Query;
+
+
+public interface ProductRepository extends GemfireRepository<Product, String> {
+
+	Collection<Product> findAll();
+
+	Product findById(String id);
+
+	@Query("SELECT * FROM /Product p WHERE p.stockOnHand > 0")
+	Collection<Product> findAllWithStock();
+
+	@Query("SELECT * FROM /Product p WHERE p.brand = $1 and p.\"type\"= $2 and p.gender = $3")
+	Collection<Product> findAllByBrandTypeGender(String brand, String type,
+			String gender);
+
+	@Query("SELECT * FROM /Product p   WHERE  p.brand = $1 and  p.\"type\" = $2 and  p.gender = $3 and  p.stockOnHand > 0")
+	Collection<Product> findAllWithStockByBrandTypeGender(String brand,String type, String gender);
+
+    @Query("SELECT * FROM /Product p WHERE p.\"type\" LIKE $1 and p.stockOnHand > 0")
+    Collection<Product> findAllWithStockByBrand( String brand) ;
+
+}
