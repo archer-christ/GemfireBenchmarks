@@ -17,7 +17,11 @@
   <region name="Product">
      <region-attributes refid="PARTITION">
      	<key-constraint>java.lang.String</key-constraint>
-     	<partition-attributes redundant-copies="1"/>
+     	<partition-attributes redundant-copies="1">
+     		<partition-resolver name="TransactionPartitionResolver">
+  		 		<class-name>io.pivotal.benchmarks.partitionresolver.TransactionPartitionResolver</class-name>
+  		 	</partition-resolver>
+  		</partition-attributes>
      </region-attributes>
   </region>
 
@@ -38,6 +42,9 @@
 		</function>
 		<function>
 			<class-name>io.pivotal.benchmarks.functions.GetTransactionCountForProductTypeFunction</class-name>
+		</function>
+		<function>
+			<class-name>io.pivotal.benchmarks.functions.GetDisplayInfoForTransactionFunction</class-name>
 		</function>
   </function-service>
 

@@ -46,6 +46,8 @@ public class GetTransactionCountForProductTypeFunction extends FunctionAdapter i
     	String queryString = "SELECT count(*) FROM /Transaction t WHERE t.productId = "
     			+ "'" + productType + "'";
     	logger.info("Query: " + queryString);
+
+
 	   	 QueryService queryService = cache.getQueryService();
 	   	 Query query = queryService.newQuery(queryString);
 	   	 SelectResults results = null;

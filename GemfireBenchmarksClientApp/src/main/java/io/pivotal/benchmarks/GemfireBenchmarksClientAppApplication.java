@@ -41,7 +41,8 @@ public class GemfireBenchmarksClientAppApplication {
 					if ( option!=null && option.equals("1")) {
 						invokeTransaction();
 					} else if ( option!=null && option.equals("2")) {
-						invokeFunctions();
+//						invokeFunctions();
+						invokeDisplayFunctions();
 					} else if ( option!=null && option.equals("3")) {
 						input.close();
 						System.exit(0);
@@ -79,6 +80,18 @@ public class GemfireBenchmarksClientAppApplication {
 				System.out.println("**********Press Enter To Continue**********");
 
 			}
+
+			private void invokeDisplayFunctions() {
+
+				System.out.println("**********Starting Function Execution**********");
+				String result = gt.executeTransactionInfoDisplayFunction("4515#449");
+				System.out.println("**********Function execution completed**********");
+				System.out.println(result);
+				System.out.println("**********Press Enter To Continue**********");
+
+			}
+
+
 
     	};
     }

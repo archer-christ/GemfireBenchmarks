@@ -7,7 +7,9 @@ import io.pivotal.benchmarks.repositories.TransactionRepository;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,6 +22,7 @@ import com.gemstone.gemfire.cache.execute.Execution;
 import com.gemstone.gemfire.cache.execute.FunctionService;
 import com.gemstone.gemfire.cache.execute.ResultCollector;
 import com.gemstone.gemfire.cache.query.SelectResults;
+import com.gemstone.gemfire.cache.query.Struct;
 
 @Component
 public class GemfireTransaction {
@@ -106,6 +109,34 @@ public class GemfireTransaction {
     	return result;
     }
 
+    public String executeTransactionInfoDisplayFunction(String transactionId) {
+
+    	StopWatch sw = new StopWatch();
+
+//    	Integer count = productFunctionCaller.getTransactionCountForProductTypeFunction(productType);
+
+    	Region<?,?> region = clientCache.getRegion("Transaction");
+
+    	Set<String> filters = new HashSet<String>() {{
+    		add(transactionId);
+    	}};
+
+    	Execution functionExecution = FunctionService.
+    			onRegion(region).withFilter(filters);
+
+    	sw.start();
+		ResultCollector<?,?> resultCollector = functionExecution.
+				execute("GetDisplayInfoForTransactionFunction");
+
+		List<?> response = (List<?>)resultCollector.getResult();
+		SelectResults<?> queryResult = (SelectResults<?>)response.get(0);
+		Struct results = (Struct)queryResult.asList().get(0);
+    	sw.stop();
+    	System.out.println("Transaction Info :" + results);
+    	String result = "Total time in MiliSeconds(ms): " + sw.getTotalTimeMillis();
+    	return result;
+    }
+
 	private Transaction createTransactionObject( Product product) {
 
 		Transaction transaction = new Transaction();
@@ -115,7 +146,7 @@ public class GemfireTransaction {
         transaction.setQuantity(1);
         transaction.setOrderStatus("OPEN");
         transaction.setProductId(product.getId());
-        transaction.setRetailPrice(new Double (100.00));
+        transaction.setRetailPrice(new Double (510.00));
         transaction.setId(System.currentTimeMillis() + "#" + product.getId());
 
 		return transaction;

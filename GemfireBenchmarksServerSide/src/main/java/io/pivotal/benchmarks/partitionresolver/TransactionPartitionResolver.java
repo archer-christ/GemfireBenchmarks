@@ -6,6 +6,7 @@ import java.util.Properties;
 import com.gemstone.gemfire.cache.Declarable;
 import com.gemstone.gemfire.cache.EntryOperation;
 import com.gemstone.gemfire.cache.PartitionResolver;
+import com.gemstone.gemfire.internal.lang.StringUtils;
 
 public class TransactionPartitionResolver implements PartitionResolver, Serializable, Declarable {
 
@@ -29,12 +30,15 @@ public class TransactionPartitionResolver implements PartitionResolver, Serializ
 	public Object getRoutingObject(EntryOperation arg0) {
 
 		String key = (String) arg0.getKey();
-		String routingKey[] = key.split("#");
 
-		if(routingKey[1] != null) {
-			return routingKey[1];
+		if(key.contains("#")) {
+			String routingKey[] = key.split("#");
+			if (!StringUtils.isEmpty(routingKey[1])) {
+				return routingKey[1];
+			}
 		}
 		return key;
 	}
+	
 
 }
