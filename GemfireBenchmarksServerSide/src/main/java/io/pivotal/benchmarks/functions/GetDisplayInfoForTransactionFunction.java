@@ -28,7 +28,6 @@ public class GetDisplayInfoForTransactionFunction extends FunctionAdapter implem
 
     private GemFireCache cache;
     private LogWriter logger;
-    private transient QueryService queryService = null;
 
     public GetDisplayInfoForTransactionFunction() {
         this.cache = CacheFactory.getAnyInstance();
@@ -57,7 +56,6 @@ public class GetDisplayInfoForTransactionFunction extends FunctionAdapter implem
     	logger.info("Query: " + queryString);
 
 	   	QueryService queryService = cache.getQueryService();
-//    	this.queryService = CacheFactory.getAnyInstance().getQueryService();
 	   	Query query = queryService.newQuery(queryString);
 	   	SelectResults results = null;
 
