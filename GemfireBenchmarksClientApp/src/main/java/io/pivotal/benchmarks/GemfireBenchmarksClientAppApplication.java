@@ -1,5 +1,7 @@
 package io.pivotal.benchmarks;
 
+
+
 import io.pivotal.benchmarks.clients.GemfireTransaction;
 
 import java.util.Scanner;
@@ -71,6 +73,7 @@ public class GemfireBenchmarksClientAppApplication {
 				in.close();
 			}
 
+			@SuppressWarnings("unused")
 			private void invokeFunctions() {
 
 				System.out.println("**********Starting Function Execution**********");

@@ -1,6 +1,5 @@
 package io.pivotal.benchmarks.functions;
 
-import java.util.Iterator;
 import java.util.Properties;
 import java.util.Set;
 

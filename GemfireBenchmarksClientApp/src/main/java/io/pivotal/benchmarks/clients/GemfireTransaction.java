@@ -117,7 +117,8 @@ public class GemfireTransaction {
 
     	Region<?,?> region = clientCache.getRegion("Transaction");
 
-    	Set<String> filters = new HashSet<String>() {{
+    	@SuppressWarnings("serial")
+		Set<String> filters = new HashSet<String>() {{
     		add(transactionId);
     	}};
 

@@ -8,6 +8,7 @@ import com.gemstone.gemfire.cache.EntryOperation;
 import com.gemstone.gemfire.cache.PartitionResolver;
 import com.gemstone.gemfire.internal.lang.StringUtils;
 
+@SuppressWarnings("rawtypes")
 public class TransactionPartitionResolver implements PartitionResolver, Serializable, Declarable {
 
 	private static final long serialVersionUID = 1L;
@@ -39,6 +40,6 @@ public class TransactionPartitionResolver implements PartitionResolver, Serializ
 		}
 		return key;
 	}
-	
+
 
 }

@@ -17,6 +17,7 @@
 		<module>GemfireBenchmarksDataLoader</module>
 		<module>GemfireBenchmarksClientApp</module>
 		<module>GemfireBenchmarksCQClient</module>
+		<module>GemfireBenchmarksDurableClient</module>
 	</modules>
 
 
